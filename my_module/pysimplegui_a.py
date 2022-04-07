@@ -63,7 +63,7 @@ def input_text2(default_text1,default_text2,msg_font,msg_size):
 
 
 def pop_msg(msg):
-    sg.popup(msg,
+    sg.popup(msg,font = ('BIZ UDゴシック',16),
             keep_on_top=True,
             auto_close=False)
 
@@ -87,21 +87,21 @@ def get_filedata(file_list,skiprows,index_col,parse_dates):
     return df_concat
 
 
-def main():
+def filelist(default_path,extension):
     font01 = 'BIZ UDゴシック'
     font02 = 'Arial Narrow'
-
     sg.theme('BluePurple')
-    
     layout = [
         [sg.Text('データ保存フォルダを指定してください',
             font=(font01,18))],
         [sg.Button('フォルダ選択',key='-SUBMIT1-',
             pad=((120,0),(0,0)))],
-        [sg.Text('パス:'),sg.Text(key='-ADDRESS-',
-            size=(80,1),font=(font02,12))],
+        [sg.Text('パス:'),
+         sg.Text(key='-ADDRESS-',
+            size=(80,1),font=(font02,12),
+            text=default_path)],
         [sg.Text('拡張子:'),sg.InputText(key='-TEXT-',
-            size=(20,10),default_text='.xlsx')],
+            size=(20,10),default_text=extension)],
         [sg.Button('読み込み',key='-SUBMIT2-',
             pad=((120,0),(0,0)))],
         [sg.Text(key='-AMOUNT-',
@@ -111,7 +111,6 @@ def main():
         # [sg.Button('閉じる',key='-SUBMIT3-',
         #     pad=((120,0),(0,0)))]
     ]
-
     window = sg.Window('ファイルリスト取得',layout,
                     size=(650,500),font=(font01,14))
     while True:
@@ -123,8 +122,9 @@ def main():
             folder_path = get_path(input_data)
             window['-ADDRESS-'].update(value=folder_path,
                                 font=(font02,12))
-        if event=='-SUBMIT2-':
-            file_list = get_list(folder_path,input_data)
+        elif event=='-SUBMIT2-':
+            print(default_path)
+            file_list = get_list(default_path,extension)
             window['-AMOUNT-'].update(value=file_list,
                                 font=(font01,10))
             window['-MESSAGE-'].update(value=f'リスト取得完了しました',
@@ -143,9 +143,17 @@ if __name__ == '__main__':
     default_text2 = '入力してください'
     msg_font = 'BIZ UDゴシック'
     msg_size = 16
+    default_path = ('C:\\Users\\Okada_S8'
+                        '\\Documents\\32_Python'
+                        '\\anaconda\\train001\\data01')
+    extension = '.xlsx'
+    
+    filelist = filelist(default_path,extension)
+    print(filelist)
+    
     text_a = input_text(default_text1,default_text2,msg_font,msg_size)
     print(text_a)
-    text_a = input_text_simple(default_text1,default_text2,msg_font,msg_size)
+    text_a = input_text2(default_text1,default_text2,msg_font,msg_size)
     print(text_a)
     
-    main()
+
