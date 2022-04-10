@@ -3,17 +3,6 @@ from pathlib import Path
 import glob
 import pandas as pd
 
-def get_path(input_data):
-    text=input_data
-    fpath = sg.popup_get_folder('フォルダを選択してください',
-                                initial_folder=Path.cwd())
-    return fpath
-
-def get_list(folder_path,input_data):
-    file_path = folder_path + '/*' + input_data
-    file_list =glob.glob(file_path)
-    return file_list
-
 def input_text(default_text1,default_text2,msg_font,msg_size):
     layout = [
     [sg.Text(default_text1),sg.InputText(default_text=default_text2,
@@ -85,6 +74,18 @@ def get_filedata(file_list,skiprows,index_col,parse_dates):
         # print(df_read_excel.head(2))
         df_concat = pd.concat([df_read_excel,df_concat])
     return df_concat
+
+
+def get_path(input_data):
+    text=input_data
+    fpath = sg.popup_get_folder('フォルダを選択してください',
+                                initial_folder=Path.cwd())
+    return fpath
+
+def get_list(folder_path,input_data):
+    file_path = folder_path + '/*' + input_data
+    file_list =glob.glob(file_path)
+    return file_list
 
 
 def filelist(default_path,extension):
