@@ -61,9 +61,19 @@ def pop_msg2(msg,msg_font,msg_size):
              keep_on_top=True,
              auto_close=False)
 
+def readexcel(file_name,skiprows,index_col,parse_dates):
+    df =pd.read_excel(file_name,
+                skiprows=skiprows,
+                index_col=index_col,
+                parse_dates=parse_dates)
+    return df
 
-def get_filedata(file_list,skiprows,index_col,parse_dates):
-    # print(file_list)
+
+def readexcels(file_list,skiprows,index_col,parse_dates):
+    print(file_list)
+    print(skiprows)
+    print(index_col)
+    print(parse_dates)
     df_concat = pd.DataFrame()
     # ファイル読み込み＆結合　データフレーム作成
     for i in file_list:
@@ -113,8 +123,10 @@ def filelist(default_path,extension):
         #     pad=((120,0),(0,0)))]
     ]
     window = sg.Window('ファイルリスト取得',layout,
-                    size=(650,500),font=(font01,14))
+                    size=(750,500),font=(font01,14))
     while True:
+        folder_path = default_path
+        print(folder_path)
         event,values = window.read()
         if event=='-SUBMIT1-':
             window['-MESSAGE-'].update(value='',
@@ -124,8 +136,8 @@ def filelist(default_path,extension):
             window['-ADDRESS-'].update(value=folder_path,
                                 font=(font02,12))
         elif event=='-SUBMIT2-':
-            print(default_path)
-            file_list = get_list(default_path,extension)
+            
+            file_list = get_list(folder_path,extension)
             window['-AMOUNT-'].update(value=file_list,
                                 font=(font01,10))
             window['-MESSAGE-'].update(value=f'リスト取得完了しました',

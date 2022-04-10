@@ -17,11 +17,12 @@ class Setting:
         self.no = ''
         self.today = datetime.datetime.now()
         self.workday = self.today.strftime('%Y%m%d')
-        self.export_file_path = ('C:\\Users'
-                        '\\Okada_S8\\Desktop\\output')
+        self.export_file_path = ('C:\\Users\\Okada_S8'
+                    '\\Documents\\32_Python'
+                    '\\02_output_Data\\taikyu\\teikaku_01')
         self.default_path = ('C:\\Users\\Okada_S8'
-                        '\\Documents\\32_Python'
-                        '\\anaconda\\train001\\data01')
+                    '\\Documents\\32_Python'
+                    '\\01_sample_Data\\taikyu\\teikaku_01')
         self.extension = '.xlsx'
         
     def CreateDataFrame(self):
